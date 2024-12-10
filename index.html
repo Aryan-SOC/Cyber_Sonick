@@ -3,148 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Coming Soon - Cybersonic</title>
+    <title>Cyber Sonick - Coming Soon</title>
     <style>
-        /* CSS: Dark Theme with Neon Accents */
         body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: radial-gradient(circle, #1a1a1d, #121212);
+            background: linear-gradient(45deg, rgba(255, 105, 180, 0.7), rgba(255, 165, 0, 0.7));
+            background-size: cover;
+            font-family: Arial, sans-serif;
             color: #fff;
-            overflow: hidden;
-        }
-        h1 {
-            font-size: 3em;
-            color: #0ff; /* Neon blue */
             text-align: center;
-            margin: 20px 0;
+            padding: 50px;
+            margin: 0;
         }
-        p {
-            text-align: center;
-            font-size: 1.2em;
-            color: #ccc;
-        }
+
         .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for the form */
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 40px;
+        }
+
+        form {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            position: relative;
         }
-        .countdown {
-            font-size: 2em;
-            margin: 20px 0;
-            color: #0ff;
-            letter-spacing: 3px;
-        }
-        .form-container {
-            margin-top: 20px;
-        }
+
         input[type="email"] {
             padding: 10px;
-            font-size: 1em;
-            border: none;
+            font-size: 16px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #fff;
             border-radius: 5px;
-            margin-right: 10px;
-            width: 250px;
         }
+
         button {
             padding: 10px 20px;
-            font-size: 1em;
+            background-color: #ff7a00;
             border: none;
-            border-radius: 5px;
-            background: #0ff;
-            color: #000;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0bb;
             color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
         }
-        footer {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-            color: #aaa;
-            font-size: 0.9em;
+
+        button:hover {
+            background-color: #ff6e00;
         }
-        /* Dynamic Background Animation */
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: url('https://www.transparenttextures.com/patterns/circuit-board.png'),
-                linear-gradient(135deg, rgba(20, 20, 20, 0.7), rgba(0, 0, 0, 0.9));
-            background-size: cover;
-            animation: glow 6s infinite alternate;
+
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
         }
-        @keyframes glow {
-            from {
-                background-color: rgba(0, 255, 255, 0.05);
-            }
-            to {
-                background-color: rgba(0, 255, 255, 0.15);
-            }
+
+        /* About Section */
+        .about-section {
+            margin-top: 40px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .about-section h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .about-section p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Countdown */
+        #countdown {
+            font-size: 28px;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
-    <!-- HTML Structure -->
-    <div class="background"></div>
-    <div class="container">
-        <h1>Coming Soon to Cybersonic.in</h1>
-        <p>Your hub for cutting-edge cybersecurity content and services.</p>
-        <div class="countdown" id="countdown">00d : 00h : 00m : 00s</div>
-        <div class="form-container">
-            <input type="email" id="email" placeholder="Enter your email" required>
-            <button onclick="subscribe()">Subscribe</button>
-        </div>
-    </div>
-    <footer>© 2024 Cybersonic. All rights reserved.</footer>
 
-    <!-- JavaScript -->
+    <div class="container">
+        <h1>Cyber Sonick - Coming Soon</h1>
+        <p>Stay tuned for updates! Subscribe to be notified when we launch.</p>
+
+        <form id="subscribeForm">
+            <input type="email" id="userEmail" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+
+        <div id="successMessage" class="message" style="display: none;">Thank you for subscribing!</div>
+    </div>
+
+    <!-- About Us Section -->
+    <div class="about-section">
+        <h2>About Cyber Sonick</h2>
+        <p>Cyber Sonick is your go-to platform for the latest trends and insights in the world of cybersecurity. Whether you are a beginner or an expert, we aim to bring you quality content that will keep you updated with the ever-evolving field of cybersecurity. Stay tuned for our official launch, where we’ll provide exclusive tools, tips, and resources to help you excel in your cybersecurity journey.</p>
+    </div>
+
+    <!-- Countdown Timer -->
+    <div id="countdown"></div>
+
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
+        })();
+
+        // Get the form element
+        const form = document.getElementById("subscribeForm");
+        const userEmailInput = document.getElementById("userEmail");
+        const successMessage = document.getElementById("successMessage");
+
+        // Form submit handler
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const userEmail = userEmailInput.value;
+
+            // Send email via EmailJS
+            const templateParams = {
+                email: userEmail
+            };
+
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams) // Replace with your EmailJS service and template IDs
+                .then(function(response) {
+                    console.log("Email sent successfully:", response);
+                    successMessage.style.display = "block";
+                    form.reset();
+                }, function(error) {
+                    console.log("Failed to send email:", error);
+                    alert("Failed to subscribe. Please try again later.");
+                });
+        });
+
         // Countdown Timer
+        const countdownDate = new Date("Dec 31, 2024 00:00:00").getTime();
         const countdownElement = document.getElementById("countdown");
-        const targetDate = new Date("2024-12-31T23:59:59"); // Set your target date
 
         function updateCountdown() {
-            const now = new Date();
-            const timeDifference = targetDate - now;
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
 
-            if (timeDifference <= 0) {
-                countdownElement.innerHTML = "The wait is over!";
-                return;
-            }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
-            const seconds = Math.floor((timeDifference / 1000) % 60);
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-            countdownElement.innerHTML = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
-        }
-
-        setInterval(updateCountdown, 1000);
-
-        // Subscribe Form Handler
-        function subscribe() {
-            const emailInput = document.getElementById("email");
-            const email = emailInput.value.trim();
-
-            if (email) {
-                alert(`Thank you for subscribing, ${email}!`);
-                emailInput.value = "";
-            } else {
-                alert("Please enter a valid email address.");
+            if (distance < 0) {
+                clearInterval(x);
+                countdownElement.innerHTML = "LAUNCHED!";
             }
         }
+
+        const x = setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
